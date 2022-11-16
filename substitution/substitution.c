@@ -14,7 +14,7 @@ void ciphering(string key, string plaintext, string ciphertext);
 
 int main(int argc, string argv[])
 {
-    if(argc != 2 || strlen(argv[1]) != 26 || checking(argv) == false)
+    if (argc != 2 || strlen(argv[1]) != 26 || checking(argv) == false)
     {
         printf("Something is wrong.\n");
         return 1;
@@ -25,7 +25,7 @@ int main(int argc, string argv[])
         string plaintext = get_string("plaintext: ");
         string ciphertext = plaintext;
         ciphering(key, plaintext, ciphertext);
-        printf("ciphertext: %s", ciphertext);
+        printf("ciphertext: %s\n", ciphertext);
 
     }
 }
@@ -39,29 +39,19 @@ key[plaintext[i] - 97]
 */
 void ciphering(string key, string plaintext, string ciphertext)
 {
-    for(int i = 0; 1 < strlen(plaintext); i++)
+    for (int i = 0; i < strlen(plaintext); i++)
     {
         char tocip = plaintext[i];
 
-        if(isalpha(tocip))
+        if (isalpha(tocip))
         {
-            if(islower(tocip))
+            if (islower(tocip)) // lower
             {
-                int keyfinder = tocip - 97;
-
-                char keytocip = key[keyfinder];
-
-                ciphertext[i] = keytocip;
-
+                ciphertext[i] = tolower(key[tocip - 97]);
             }
-            else
+            else //upper
             {
-                int keyfinder = tocip - 65;
-
-                char keytocip = key[keyfinder];
-
-                ciphertext[i] = keytocip;
-
+                ciphertext[i] = toupper(key[tocip - 65]);
             }
         }
         else
@@ -81,10 +71,10 @@ bool checking(string argv[])
             {
                 return false; // Some digit is not a number
             }
-            for(int j = 0; j < i; j++)
+            for (int j = 0; j < i; j++)
             {
                 //printf("%d this is J\n", j); (debbug too)
-                if(key[i] == key[j])
+                if (key[i] == key[j])
                 {
                     return false;
                 }
