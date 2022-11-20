@@ -1,19 +1,19 @@
 #include <cs50.h>
 #include <stdio.h>
 
-void validatecard(long creditnumber);
+void validatecard(long creditnumber); // This will "active" all the others functions
 
 int main(void)
 {
-  long creditnumber;
+    long creditnumber;
 
-  creditnumber = get_long("Number: ");
+    creditnumber = get_long("Number: ");
 
-  validatecard(creditnumber);
+    validatecard(creditnumber); //After get the credit number this will do a "domino" effect
 
 }
 
-int inicialvalid(long creditnumber)
+int inicialvalid(long creditnumber) //Just to get the inicial values
 {
     while (creditnumber > 100)
     {
@@ -22,7 +22,7 @@ int inicialvalid(long creditnumber)
     return creditnumber;
 }
 
-int numberlenght(long creditnumber)
+int numberlenght(long creditnumber) //How much digits the cc has
 {
     int digits = 0;
     while (creditnumber != 0)
@@ -34,7 +34,7 @@ int numberlenght(long creditnumber)
 }
 
 
-char *digitscheck(long creditnumber)
+char *digitscheck(long creditnumber) // It will check ther first two number and return the bank flag
 {
     int first_two_digits = inicialvalid(creditnumber);
     int digits = numberlenght(creditnumber);
@@ -78,7 +78,7 @@ char *digitscheck(long creditnumber)
 }
 
 
-bool validateluhn(long creditnumber)
+bool validateluhn(long creditnumber) // Does the luhn method
 {
     int digits = numberlenght(creditnumber);
     int credit[digits];
@@ -95,14 +95,14 @@ bool validateluhn(long creditnumber)
     int multiarr = 0;
     for (int i = 0; i < digits; i++)
     {
-        if (i % 2 == 0)
+        if (i % 2 == 0) //Stores all the other values
         {
-            somarr += credit[i];
+            somarr += credit[i];//Soma(sum) array
         }
-        else if (credit[i] * 2 >= 10)
+        else if (credit[i] * 2 >= 10)// takes all the second until last number
         {
-            multiarr += (credit[i] * 2) % 10;
-            multiarr ++;
+            multiarr += (credit[i] * 2) % 10; //separates 10 numbers+
+            multiarr ++; //Multi Array
         }
         else
         {
@@ -122,9 +122,9 @@ bool validateluhn(long creditnumber)
     }
 }
 
-void validatecard(long creditnumber)
+void validatecard(long creditnumber) // all the checks in this scope
 {
-    if (validateluhn(creditnumber) == true)
+    if (validateluhn(creditnumber) == true) // Everything is ok
     {
         char *flag = digitscheck(creditnumber);
         printf("%s", flag);
